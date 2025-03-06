@@ -1,7 +1,6 @@
 '''
 # * Description: Basic Docker Commands
 
-
 # ! List all Images
 # | docker images
 
