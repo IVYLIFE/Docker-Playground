@@ -1,0 +1,15 @@
+services:
+  feedback-app:
+    image: star-wars
+    container_name: star-wars
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - .env
+

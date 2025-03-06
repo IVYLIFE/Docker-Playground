@@ -1,0 +1,10 @@
+1. Command to build image
+docker build -t star-wars .
+
+2. Command to run the container
+docker run \
+  --name star-wars \
+  --env-file .env \
+  -p 3000:3000 \
+  --rm \
+  star-wars
