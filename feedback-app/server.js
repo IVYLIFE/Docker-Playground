@@ -3,13 +3,14 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import express from 'express';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 const app = express();
-const PORT = 80;
+const PORT = process.env.PORT;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-console.log(__filename);
-console.log(__dirname);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
@@ -51,7 +52,8 @@ app.post('/create', async (req, res) => {
       await fs.access(finalFilePath);
       res.redirect('/exists');
     } catch {
-      await fs.rename(tempFilePath, finalFilePath);
+      await fs.copyFile(tempFilePath, finalFilePath);
+      await fs.unlink(tempFilePath);
       res.redirect('/');
     }
   } catch (error) {

@@ -1,0 +1,12 @@
+1. Command to build image
+docker build -t feedback-app .
+
+2. Command to run the container
+docker run \
+  -v "/Users/fisdom/Desktop/Code/Learning/Docker-Playground/feedback-app:/feedbackApp" \
+  -v /feedbackApp/node_modules \
+  --name feedback-app \
+  --env-file .env \
+  -p 80:80 \
+  --rm \
+  feedback-app

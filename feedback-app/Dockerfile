@@ -15,8 +15,17 @@ RUN npm install
 # Copy all files in the container
 COPY . .
 
-# Expose the port 80
-EXPOSE 80
+# Set the default port for the server
+ARG DEFAULT_PORT 80
+
+# Set the environment variable for the port
+ENV PORT=$DEFAULT_PORT
+
+# Expose the port
+EXPOSE $PORT
 
 # Run the server
-CMD [ "node", "server.js" ]
+CMD [ "npm", "start" ]
+
+
+
