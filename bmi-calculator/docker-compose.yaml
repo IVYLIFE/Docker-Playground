@@ -1,0 +1,10 @@
+services:
+  bmi-python-app:
+    image: bmi-calculator
+    container_name: bmi-calculator
+    
+    build: 
+      context: .
+
+    stdin_open: true      # Keep STDIN open even if not attached
+    tty: true             # Allocate a pseudo-TTY
