@@ -1,5 +1,5 @@
 services:
-  feedback-app:
+  star-wars-for-dummies:
     image: star-wars
     container_name: star-wars
 
