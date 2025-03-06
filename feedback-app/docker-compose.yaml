@@ -9,7 +9,7 @@ services:
     
     volumes:
       - ./:/feedbackApp                      # Bind mount the current directory to the /feedbackApp directory in the container
-      - ./feedbackApp/node_modules           # Anonymous volume to persist node_modules
+      - /feedbackApp/node_modules           # Anonymous volume to persist node_modules
 
     ports:
       - "80:80"
