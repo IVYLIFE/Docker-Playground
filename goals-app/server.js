@@ -1,11 +1,19 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+import cors from "cors";
+
 
 const app = express();
+dotenv.config();
+
 let userGoal = 'Learn Docker!';
 
-app.use(bodyParser.urlencoded({ extended: false }));
+const PORT = process.env.PORT || 3001;
+
 app.use(express.static('public'));
+app.use(express.json());
+app.use(cors());
+
 
 app.get('/', (req, res) => {
   res.send(`
@@ -16,7 +24,7 @@ app.get('/', (req, res) => {
       </head>
       <body>
         <section>
-          <h2>My Course Goal</h2>
+          <h2>My Goals</h2>
           <h3>${userGoal}</h3>
         </section>
         <form action="/store-goal" method="POST">
@@ -33,9 +41,10 @@ app.get('/', (req, res) => {
 
 app.post('/store-goal', (req, res) => {
   const { goal } = req.body;
+  console.log(req.body);
   console.log(goal);
   userGoal = goal;
   res.redirect('/');
 });
 
-app.listen(80, () => console.log('Server running on port 80'));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

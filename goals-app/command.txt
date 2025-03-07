@@ -1,0 +1,12 @@
+1. Command to build image
+docker build -t goals-app .
+
+2. Command to run the container
+docker run \
+  -v "/Users/fisdom/Desktop/Code/Learning/Docker-Playground/goals-app:/goals-app" \
+  -v /goals-app/node_modules \
+  --name goals-app \
+  --env-file ./.env \
+  -p 3000:3000 \
+  --rm \
+  goals-app
