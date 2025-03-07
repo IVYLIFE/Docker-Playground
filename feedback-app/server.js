@@ -36,7 +36,8 @@ app.post('/create', async (req, res) => {
   const finalFilePath = path.join(feedbackDir, `${adjTitle}.txt`);
 
   console.log('\n\n================================================')
-  console.log(title, content, adjTitle);
+  console.log('Title : ', title)
+  console.log('Content : ', content)
   console.log(tempDir)
   console.log(feedbackDir)
   console.log(tempFilePath)
