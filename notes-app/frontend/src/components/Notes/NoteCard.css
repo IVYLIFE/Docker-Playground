@@ -1,0 +1,13 @@
+#notes {
+  text-align: center;
+}
+
+#notes h2 {
+  color: #414040;
+}
+
+#notes ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
