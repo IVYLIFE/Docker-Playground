@@ -1,19 +1,40 @@
 services:
-  goals-app:
-    image: goals-app:compose
-    container_name: goals-app
+  # Service using an image built with ARG (DEFAULT_PORT=4000)
+  # goals-app-arg:
+  #   image: goals-app-compose:arg
+  #   container_name: goals-app-arg
+
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     args:
+  #       DEFAULT_PORT: 4000  # This is the build-time argument
+
+  #   volumes:
+  #     - ./:/goals-app
+  #     - /goals-app/node_modules
+
+  #   env_file:
+  #     - .env  # Load environment variables
+
+  #   ports:
+  #     - "3000:${PORT:-4000}"  # Map host 3000 to container PORT (default 4000)
+
+  # Service using an image built WITHOUT ARG (Defaults to whatever is in Dockerfile)
+  goals-app-noarg:
+    image: goals-app-compose:noarg
+    container_name: goals-app-noarg
 
     build:
       context: .
       dockerfile: Dockerfile
-    
+
     volumes:
       - ./:/goals-app
       - /goals-app/node_modules
 
     env_file:
-      - .env
+      - .env  # Load environment variables
 
     ports:
-    - "3000:${PORT}"
-
+      - "4000:3006"  # Map host 4000 to container PORT (default 3006)

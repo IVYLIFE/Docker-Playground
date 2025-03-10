@@ -9,9 +9,11 @@ dotenv.config();
 let userGoal = 'Learn Docker!';
 
 const PORT = process.env.PORT || 3001;
+console.log(`Using PORT: ${process.env.PORT}`);
 
 app.use(express.static('public'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 
@@ -24,13 +26,13 @@ app.get('/', (req, res) => {
       </head>
       <body>
         <section>
-          <h2>My Goals</h2>
+          <h2>My Course Goals</h2>
           <h3>${userGoal}</h3>
         </section>
         <form action="/store-goal" method="POST">
           <div class="form-control">
             <label>Course Goal</label>
-            <input type="text" name="goal">
+            <input type="text" name="goal" placeholder="Set a course goal" />
           </div>
           <button>Set Course Goal</button>
         </form>

@@ -14,11 +14,10 @@ RUN npm install
 COPY . .
 
 ARG DEFAULT_PORT=3006
-
-ENV PORT=$DEFAULT_PORT
+ENV PORT=${DEFAULT_PORT}  
 
 # Make PORT available to the world outside this container
-EXPOSE $PORT
+EXPOSE ${DEFAULT_PORT}
 
 # Run server.js when the container launches
 CMD [ "npm", "run", "dev" ]
