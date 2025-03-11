@@ -14,7 +14,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API_URL = 'http://localhost:4000/notes/';
+  const API_URL = 'http://localhost:3000/notes/';
 
 
   useEffect(function () {
@@ -22,9 +22,12 @@ function App() {
       setIsLoading(true);
 
       try {
+        console.log('fetching data');
         const response = await fetch(API_URL);
+        console.log('response', response);
 
         const resData = await response.json();
+        console.log('resData', resData);
 
         if (!response.ok) {
           throw new Error(resData.message || 'Fetching the notes failed.');

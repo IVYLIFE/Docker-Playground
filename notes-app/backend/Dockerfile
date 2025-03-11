@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /app
+WORKDIR /notes-app-backend
 
 COPY package.json .
 
@@ -8,9 +8,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 80
+EXPOSE 3000
 
-ENV MONGODB_USERNAME=root
-ENV MONGODB_PASSWORD=secret
-
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

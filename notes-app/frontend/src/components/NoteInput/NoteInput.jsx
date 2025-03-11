@@ -34,7 +34,7 @@ function NoteInput({ onAddNote }) {
               name='text'
               value={enteredNoteText}
               onChange={updateNoteTextHandler}
-              placeholder='Enter your note here'
+              placeholder='Enter your Note here..'
             />
           </div>
           <button>Add Note</button>

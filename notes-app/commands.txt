@@ -2,19 +2,30 @@
 Create Network
 ---------------------
 
-docker network create goals-net
+docker network create notes-app-network
+docker buils -t notes-app-frontend .
+docker buils -t notes-app-backend .
 
 ---------------------
 Run MongoDB Container
 ---------------------
 
+1. Exposing Port
 docker run --name mongodb \
-  -e MONGO_INITDB_ROOT_USERNAME=max \
-  -e MONGO_INITDB_ROOT_PASSWORD=secret \
   -v data:/data/db \
   --rm \
   -d \
-  --network goals-net \
+  -p 27017:27017 \
+  mongo
+
+
+2. Using Created Network
+docker run --name mongodb \
+  -v data:/data/db \
+  --rm \
+  -d \
+  -p 27017:27017 \
+  --network notes-app-network \
   mongo
 
 ---------------------
@@ -27,17 +38,26 @@ docker build -t goals-node .
 Run Node API Container
 ---------------------
 
-docker run --name goals-backend \
-  -e MONGODB_USERNAME=max \
-  -e MONGODB_PASSWORD=secret \
-  -v logs:/app/logs \
-  -v /Users/maximilianschwarzmuller/development/teaching/udemy/docker-complete/backend:/app \
-  -v /app/node_modules \
+1. Exposing Port
+docker run 
+  --name notes-app-backend \
+  -v logs:/notes-app-backend/logs \
+  -v /Users/fisdom/Desktop/Code/Learning/Docker-Playground/notes-app/backend:/notes-app-backend \
+  -v /notes-app-backend/node_modules \
   --rm \
-  -d \
-  --network goals-net \
-  -p 80:80 \
-  goals-node
+  -p 3000:3000 \
+  notes-app-backend
+
+2. Using Created Network
+docker run --name notes-app-backend \
+  -v logs:/notes-app-backend/logs \
+  -v /Users/fisdom/Desktop/Code/Learning/Docker-Playground/notes-app/backend:/notes-app-backend \
+  -v /notes-app-backend/node_modules \
+  --rm \
+  --d \
+  --network notes-app-network \
+  -p 3000:3000 \
+  notes-app-backend
 
 ---------------------
 Build React SPA Image
@@ -49,17 +69,29 @@ docker build -t goals-react .
 Run React SPA Container
 ---------------------
 
-docker run --name goals-frontend \
-  -v /Users/maximilianschwarzmuller/development/teaching/udemy/docker-complete/frontend/src:/app/src \
+docker run --name notes-app-frontend \
+  -v /Users/fisdom/Desktop/Code/Learning/Docker-Playground/notes-app/frontend/src:/notes-app-frontend/src \
+  -v /notes-app-frontend/node_modules \
   --rm \
-  -d \
-  -p 3000:3000 \
+  -p 5173:5173 \
   -it \
-  goals-react
+  notes-app-frontend
 
 ---------------------
 Stop all Containers
 ---------------------
 
-docker stop mongodb goals-backend goals-frontend
+docker exec -it mongodb sh
+docker network inspect notes-app-network
 
+logs
+docker container logs mongodb
+docker container inspect mongodb
+
+2. backend
+docker container log notes-app-backend
+docker container inspect notes-app-backend
+
+3. frontend
+docker container log notes-app-frontend
+docker container inspect notes-app-frontend

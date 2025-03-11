@@ -1,0 +1,58 @@
+services:
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - notes-app-network
+    volumes:
+      - data:/data/db
+
+  notes-app-backend:
+    image: notes-app-backend
+    container_name: notes-app-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - notes-app-network
+    depends_on:
+      - mongodb
+    
+    volumes:
+      - logs:/notes-app-backend/logs
+      - ./backend:/notes-app-backend
+      - /notes-app-backend/node_modules
+
+  notes-app-frontend:
+    image: notes-app-frontend
+    container_name: notes-app-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+
+    stdin_open: true
+    tty: true
+    
+    volumes:
+      - ./frontend/src:/notes-app-frontend/src
+      - /notes-app-frontend/node_modules
+
+networks:
+  notes-app-network:
+    name: notes-app-network  # Explicitly set the network name
+    driver: bridge
+
+
+volumes:
+  data:
+    name: data
+  logs:
+    name: logs
+

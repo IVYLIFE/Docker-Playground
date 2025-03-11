@@ -9,11 +9,12 @@ import Note from './models/note.js';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 4001;
-const MONGODB_URI = "mongodb://127.0.0.1:27017/notes"; // ✅ Fixed URI (removed unnecessary @)
+const PORT = process.env.PORT || 4000;
+const MONGODB_URI_1 = "mongodb://127.0.0.1:27017/notes"; // ✅ Fixed URI (1)
+const MONGODB_URI_2 = "mongodb://mongodb:27017/notes"; // ✅ Fixed URI (2)
 
 console.log(`\n\nUsing PORT: ${PORT}`);
-console.log(`Using MONGODB_URI: ${MONGODB_URI}\n\n`);
+console.log(`Using MONGODB_URI: ${MONGODB_URI_2}\n\n`);
 
 // ✅ Ensure logs directory exists before writing logs
 const logsDir = path.resolve('logs');
@@ -91,7 +92,7 @@ app.delete('/notes/:id', async (req, res) => {
 // 🔗 Connect to MongoDB and Start Server
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI_2);
     console.log("✅ Connected to MongoDB");
 
     app.listen(PORT, () => {
